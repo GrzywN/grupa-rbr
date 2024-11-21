@@ -66,6 +66,7 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+    #[\Override]
     protected function casts(): array
     {
         return [
