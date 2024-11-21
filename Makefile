@@ -1,6 +1,9 @@
 up:
 	@vendor/bin/sail up -d
 
+lint:
+ 	@vendor/bin/sail bin pint -vvv
+
 build:
 	@cp .env.example .env
 	@docker run --rm \
