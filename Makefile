@@ -1,5 +1,7 @@
 up:
 	@vendor/bin/sail up -d
+	@vendor/bin/sail npm install
+	@vendor/bin/sail npm run dev
 
 doc:
 	@vendor/bin/sail artisan ide-helper:generate --ansi
@@ -11,6 +13,26 @@ refactor:
 
 lint:
 	@vendor/bin/sail bin pint -vvv
+	@vendor/bin/sail npm run lint:fix
+
+format:
+	@vendor/bin/sail npm run format:fix
+
+frontend-build:
+	@vendor/bin/sail npm run build
+
+test:
+	@vendor/bin/sail artisan test --ansi
+	@vendor/bin/sail npm run test
+
+pre-commit:
+	@make doc
+	@make refactor
+	@make lint
+	@make format
+	@make frontend-build
+	@make test
+	@echo "All checks passed. Ready to commit."
 
 build:
 	@cp .env.example .env
@@ -22,6 +44,7 @@ build:
 		composer install --ignore-platform-reqs
 	@vendor/bin/sail build --no-cache
 	@vendor/bin/sail up -d
+	@vendor/bin/sail npm install
 	@vendor/bin/sail artisan storage:unlink --ansi
 	@vendor/bin/sail artisan storage:link --ansi
 	@vendor/bin/sail artisan key:generate --ansi
