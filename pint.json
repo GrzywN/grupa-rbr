@@ -1,3 +1,6 @@
 {
-    "preset": "psr12"
+    "preset": "psr12",
+    "rules": {
+        "no_trailing_whitespace_in_comment": false
+    }
 }

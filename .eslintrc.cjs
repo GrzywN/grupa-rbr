@@ -9,6 +9,7 @@ module.exports = {
         "@vue/eslint-config-typescript",
         "@vue/eslint-config-prettier"
     ],
+    ignorePatterns: ["resources/js/ziggy.js", "resources/js/ziggy.d.ts"],
     parserOptions: {
         ecmaVersion: "latest"
     },
