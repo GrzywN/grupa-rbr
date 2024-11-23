@@ -15,6 +15,9 @@ lint:
 	@vendor/bin/sail bin pint -vvv
 	@vendor/bin/sail npm run lint:fix
 
+analyse:
+	@vendor/bin/sail bin phpstan analyse --ansi
+
 format:
 	@vendor/bin/sail npm run format:fix
 
@@ -29,6 +32,7 @@ pre-commit:
 	@make doc
 	@make refactor
 	@make lint
+	@make analyse
 	@make format
 	@make frontend-build
 	@make test
