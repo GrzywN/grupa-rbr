@@ -7,14 +7,9 @@ use App\Http\Controllers\TaskStatusController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', fn () => Inertia::render('Welcome', [
-    'canLogin' => Route::has('login'),
-    'canRegister' => Route::has('register'),
-    'laravelVersion' => Application::VERSION,
-    'phpVersion' => PHP_VERSION,
-]));
+Route::get('/', fn () => Inertia::render('auth/register'))->middleware('guest');
 
-Route::get('/dashboard', fn () => Inertia::render('Dashboard'))->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', fn () => Inertia::render('dashboard'))->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(static function (): void {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

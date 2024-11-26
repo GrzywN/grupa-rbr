@@ -35,5 +35,7 @@ class AppServiceProvider extends ServiceProvider
 
             return $this->format('Y-m-d');
         });
+        Carbon::setToStringFormat(\DateTime::ISO8601);
+        Carbon::serializeUsing(fn ($date): string => \Carbon\Carbon::instance($date)->toIso8601String());
     }
 }

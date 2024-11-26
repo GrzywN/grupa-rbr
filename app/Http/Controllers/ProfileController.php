@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Assert;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
-        return Inertia::render('Profile/Edit', [
+        return Inertia::render('profile/edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
         ]);
@@ -53,7 +54,7 @@ class ProfileController extends Controller
         $user = $request->user();
 
         Assert::that($user !== null, 'User must be authenticated');
-        /** @var \App\Models\User $user */
+        /** @var User $user */
 
         Auth::logout();
 
