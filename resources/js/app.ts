@@ -1,8 +1,14 @@
+import '@phosphor-icons/web/light';
 import '../css/app.css';
 import './bootstrap';
 
 import { createInertiaApp } from '@inertiajs/vue3';
+import Lara from '@primevue/themes/lara';
+import { VueQueryPlugin } from '@tanstack/vue-query';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import PrimeVue from 'primevue/config';
+import ConfirmationService from 'primevue/confirmationservice';
+import ToastService from 'primevue/toastservice';
 import { createApp, DefineComponent, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
@@ -19,6 +25,17 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .use(PrimeVue, {
+                theme: {
+                    preset: Lara,
+                    options: {
+                        darkModeSelector: false,
+                    },
+                },
+            })
+            .use(ConfirmationService)
+            .use(ToastService)
+            .use(VueQueryPlugin)
             .mount(el);
     },
     progress: {

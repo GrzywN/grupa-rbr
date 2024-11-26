@@ -12,7 +12,8 @@
         "noEmit": true,
         "skipLibCheck": true,
         "paths": {
-            "@/*": ["./resources/js/*"],
+            "@features/*": ["./resources/js/features/*"],
+            "@shared/*": ["./resources/js/shared/*"],
             "ziggy-js": ["./vendor/tightenco/ziggy"]
         }
     },
