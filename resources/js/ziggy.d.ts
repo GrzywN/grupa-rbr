@@ -6,6 +6,31 @@ declare module 'ziggy-js' {
     "profile.edit": [],
     "profile.update": [],
     "profile.destroy": [],
+    "tasks.index": [],
+    "tasks.store": [],
+    "tasks.show": [
+        {
+            "name": "task",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "tasks.update": [
+        {
+            "name": "task",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "tasks.destroy": [
+        {
+            "name": "task",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "task-priorities.index": [],
+    "task-statuses.index": [],
     "register": [],
     "login": [],
     "password.request": [],
