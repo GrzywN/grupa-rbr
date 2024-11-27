@@ -4,6 +4,7 @@ import {
     tasksSchema,
 } from '@features/tasks/schemas/task.schema';
 import { httpClient } from '@shared/api/http-client';
+import { AxiosError } from 'axios';
 import { CreateTaskForm } from '../schemas/create-task-form.schema';
 import { UpdateTaskForm } from '../schemas/update-task-form.schema';
 
@@ -37,7 +38,16 @@ class TaskService {
     }
 
     public async deleteTask(taskId: number): Promise<void> {
-        await httpClient.delete(route('tasks.destroy', taskId));
+        try {
+            await httpClient.delete(route('tasks.destroy', taskId));
+        } catch (error) {
+            if (
+                error instanceof AxiosError &&
+                error?.response?.status === 404
+            ) {
+                return;
+            }
+        }
     }
 }
 
