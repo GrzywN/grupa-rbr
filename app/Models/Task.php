@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Abbasudo\Purity\Traits\Filterable;
+use Abbasudo\Purity\Traits\Sortable;
 use App\Casts\TaskDescription;
 use App\Casts\TaskTitle;
 use App\Enums\TaskPriority;
@@ -57,6 +59,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read int|null $history_count
  * @property-read Collection<int, TaskShareToken> $shareTokens
  * @property-read int|null $share_tokens_count
+ * @method static Builder<static>|Task filter(?array $params = null)
+ * @method static Builder<static>|Task filterBy(array|string $filters)
+ * @method static Builder<static>|Task filterFields(array|string $fields)
+ * @method static Builder<static>|Task renamedFilterFields(array $renamedFilterFields)
+ * @method static Builder<static>|Task restrictedFilters(array|string $restrictedFilters)
+ * @method static Builder<static>|Task sort(?array $params = null)
+ * @method static Builder<static>|Task sortFields(array|string $fields)
  * @mixin Eloquent
  */
 #[ObservedBy(TaskObserver::class)]
@@ -66,12 +75,29 @@ class Task extends Model
     use HasFactory;
     use SoftDeletes;
     use CascadeSoftDeletes;
+    use Sortable;
+    use Filterable;
 
     /** @var array<int, string> $cascadeDeletes */
     protected array $cascadeDeletes = ['shareTokens'];
 
     /** @var array<int, string> $dates */
     protected array $dates = ['deleted_at'];
+
+    /** @var array<int, string> $filterFields */
+    protected $filterFields = [
+        'priority',
+        'status',
+        'deadline',
+    ];
+
+    /** @var array<int, string> $sortFields */
+    protected $sortFields = [
+        'title',
+        'priority',
+        'status',
+        'deadline',
+    ];
 
     public const MAX_TITLE_LENGTH = 255;
 

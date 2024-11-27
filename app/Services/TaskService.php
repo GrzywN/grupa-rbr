@@ -23,7 +23,11 @@ class TaskService
      */
     public function getTasks(User $user): Collection
     {
-        return $user->tasks()->get();
+        return $user
+            ->tasks()
+            ->filter()
+            ->sort()
+            ->get();
     }
 
     /**
