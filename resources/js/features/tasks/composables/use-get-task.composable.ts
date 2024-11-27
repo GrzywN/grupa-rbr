@@ -7,4 +7,5 @@ export const useGetTask = (taskId: number) =>
     useQuery({
         queryKey: [TASK_QUERY_KEY, taskId],
         queryFn: () => taskService.getTask(taskId),
+        staleTime: 0,
     });

@@ -4,7 +4,7 @@ import './bootstrap';
 
 import { createInertiaApp } from '@inertiajs/vue3';
 import Lara from '@primevue/themes/lara';
-import { VueQueryPlugin } from '@tanstack/vue-query';
+import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import PrimeVue from 'primevue/config';
 import ConfirmationService from 'primevue/confirmationservice';
@@ -13,6 +13,14 @@ import { createApp, DefineComponent, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            staleTime: Infinity,
+        },
+    },
+});
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
@@ -35,7 +43,9 @@ createInertiaApp({
             })
             .use(ConfirmationService)
             .use(ToastService)
-            .use(VueQueryPlugin)
+            .use(VueQueryPlugin, {
+                queryClient,
+            })
             .mount(el);
     },
     progress: {

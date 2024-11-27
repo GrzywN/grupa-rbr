@@ -9,14 +9,14 @@ export type DeleteTaskButtonProps = {
 defineProps<DeleteTaskButtonProps>();
 
 const confirm = useConfirm();
-const deleteTask = useDeleteTask();
+const { mutateAsync } = useDeleteTask();
 
 const handleDeleteTask = async (taskId: number) => {
     confirm.require({
         message: 'Are you sure you want to delete this task?',
         icon: 'ph-light ph-exclamation-mark',
         accept: async () => {
-            await deleteTask.mutateAsync(taskId);
+            await mutateAsync(taskId);
         },
     });
 };

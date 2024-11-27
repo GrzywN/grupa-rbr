@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TaskHistoryController;
+use App\Http\Controllers\TaskHistoryEventController;
 use App\Http\Controllers\TaskPriorityController;
 use App\Http\Controllers\TaskStatusController;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +28,12 @@ Route::middleware('auth')->group(static function (): void {
             Route::delete('/{task}', 'destroy')->name('tasks.destroy');
         });
 
+        Route::controller(TaskHistoryController::class)->group(static function (): void {
+            Route::get('/{task}/history', 'index')->name('task-history.index');
+        });
     });
+
+    Route::get('/task-history-events', TaskHistoryEventController::class)->name('task-history-events.index');
 
     Route::get('/task-priorities', TaskPriorityController::class)->name('task-priorities.index');
 

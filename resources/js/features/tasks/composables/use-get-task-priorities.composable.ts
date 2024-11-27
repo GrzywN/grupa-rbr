@@ -7,4 +7,5 @@ export const useGetTaskPriorities = () =>
     useQuery({
         queryKey: [TASK_PRIORITIES_QUERY_KEY],
         queryFn: taskPriorityService.getTaskPriorities,
+        staleTime: Infinity,
     });

@@ -36,8 +36,8 @@ class TaskService {
         return await taskSchema.validate(response, { strict: true });
     }
 
-    public async deleteTask(taskId: number) {
-        return httpClient.delete(route('tasks.destroy', taskId));
+    public async deleteTask(taskId: number): Promise<void> {
+        await httpClient.delete(route('tasks.destroy', taskId));
     }
 }
 

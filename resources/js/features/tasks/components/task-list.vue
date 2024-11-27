@@ -7,6 +7,7 @@ import { useGetTasks } from '../composables/use-get-tasks.composable';
 import CreateTaskButton from './create-task-button.vue';
 import DeleteTaskButton from './delete-task-button.vue';
 import ReadTaskButton from './read-task-button.vue';
+import ShowTaskHistoryButton from './show-task-history-button.vue';
 import UpdateTaskButton from './update-task-button.vue';
 
 const { data: tasks } = useGetTasks();
@@ -70,8 +71,9 @@ const { data: statusOptions, isLoading: areStatusesLoading } =
             <Column header="Actions">
                 <template #body="{ data }">
                     <div class="inline-flex space-x-2">
-                        <ReadTaskButton :task="data" />
-                        <UpdateTaskButton :task="data" />
+                        <ReadTaskButton :task-id="data.id" />
+                        <ShowTaskHistoryButton :task="data" />
+                        <UpdateTaskButton :task-id="data.id" />
                         <DeleteTaskButton :task-id="data.id" />
                     </div>
                 </template>

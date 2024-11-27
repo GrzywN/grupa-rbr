@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import UpdateTaskForm from '@features/tasks/components/update-task-form.vue';
 import { ref } from 'vue';
-import { type Task } from '../schemas/task.schema';
+import { useGetTask } from '../composables/use-get-task.composable';
 
 export type UpdateTaskButtonProps = {
-    task: Task;
+    taskId: number;
 };
 
-defineProps<UpdateTaskButtonProps>();
+const props = defineProps<UpdateTaskButtonProps>();
+
+const { data: task, refetch } = useGetTask(props.taskId);
 
 const isUpdateTaskDialogVisible = ref(false);
 
-const handleUpdateTask = () => {
+const handleUpdateTask = async () => {
+    await refetch();
     isUpdateTaskDialogVisible.value = true;
 };
 
@@ -39,6 +42,6 @@ const handleSuccess = () => {
             Update task details to keep your information accurate and
             up-to-date.
         </span>
-        <UpdateTaskForm :task="task" @success="handleSuccess" />
+        <UpdateTaskForm v-if="task" :task="task" @success="handleSuccess" />
     </Dialog>
 </template>

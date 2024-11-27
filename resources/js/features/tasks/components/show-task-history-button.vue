@@ -1,20 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useGetTask } from '../composables/use-get-task.composable';
-import TaskPreview from './task-preview.vue';
+import { type Task } from '../schemas/task.schema';
+import TaskHistory from './task-history.vue';
 
 export type ReadTaskButtonProps = {
-    taskId: number;
+    task: Task;
 };
 
-const props = defineProps<ReadTaskButtonProps>();
-
-const { data: task, refetch } = useGetTask(props.taskId);
+defineProps<ReadTaskButtonProps>();
 
 const isReadTaskDialogVisible = ref(false);
 
-const handleReadTask = async () => {
-    await refetch();
+const handleReadTask = () => {
     isReadTaskDialogVisible.value = true;
 };
 
@@ -25,7 +22,7 @@ const handleSuccess = () => {
 
 <template>
     <Button
-        icon="ph-light ph-eye"
+        icon="ph-light ph-list"
         rounded
         severity="success"
         aria-label="Show"
@@ -34,15 +31,15 @@ const handleSuccess = () => {
     <Dialog
         v-model:visible="isReadTaskDialogVisible"
         modal
-        header="Task Details"
+        header="Task History"
         :style="{ width: '25rem' }"
         :draggable="false"
     >
         <span class="text-surface-500 dark:text-surface-400 block">
-            Review all information and progress related to this task.
+            Track all changes and updates made to this task over time.
         </span>
 
-        <TaskPreview v-if="task" :task="task" />
+        <TaskHistory :task="task" />
 
         <Button
             class="mt-4 w-full"

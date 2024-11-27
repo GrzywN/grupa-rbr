@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\TaskHistoryEvent;
 use App\Enums\TaskPriority;
 use App\Enums\TaskStatus;
 use App\Models\Task;
@@ -14,7 +15,7 @@ return new class () extends Migration {
      */
     public function up(): void
     {
-        Schema::create('tasks', static function (Blueprint $table): void {
+        Schema::create('task_histories', static function (Blueprint $table): void {
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->string('title', Task::MAX_TITLE_LENGTH);
@@ -22,12 +23,11 @@ return new class () extends Migration {
             $table->enum('priority', TaskPriority::values());
             $table->enum('status', TaskStatus::values());
             $table->date('deadline');
+            $table->foreignIdFor(Task::class)->constrained()->cascadeOnDelete();
+            $table->enum('event', TaskHistoryEvent::values());
+            $table->json('diff')->nullable();
             $table->softDeletes();
             $table->timestamps();
-
-            $table->index('priority');
-            $table->index('status');
-            $table->index('deadline');
         });
     }
 
@@ -36,6 +36,6 @@ return new class () extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('task_histories');
     }
 };

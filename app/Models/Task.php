@@ -6,17 +6,21 @@ use App\Casts\TaskDescription;
 use App\Casts\TaskTitle;
 use App\Enums\TaskPriority;
 use App\Enums\TaskStatus;
+use App\Observers\TaskObserver;
 use Carbon\Carbon;
 use Database\Factories\TaskFactory;
 use Eloquent;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property int $user_id
@@ -48,8 +52,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static Builder<static>|Task withTrashed()
  * @method static Builder<static>|Task withoutTrashed()
  * @property string|null $completed_at
+ * @property-read Collection<int, \App\Models\TaskHistory> $history
+ * @property-read int|null $history_count
  * @mixin Eloquent
  */
+#[ObservedBy(TaskObserver::class)]
 class Task extends Model
 {
     /** @use HasFactory<TaskFactory> */
@@ -87,5 +94,13 @@ class Task extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return HasMany<TaskHistory, $this>
+     */
+    public function history(): HasMany
+    {
+        return $this->hasMany(TaskHistory::class);
     }
 }

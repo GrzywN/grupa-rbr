@@ -100,7 +100,7 @@ class TaskServiceTest extends TestCase
     }
 
     #[Test]
-    public function it_can_update_task_by_creation(): void
+    public function it_can_update_task(): void
     {
         $task = Task::factory()->example()->create();
         $service = app()->make(TaskService::class);

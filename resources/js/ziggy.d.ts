@@ -29,6 +29,14 @@ declare module 'ziggy-js' {
             "binding": "id"
         }
     ],
+    "task-history.index": [
+        {
+            "name": "task",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "task-history-events.index": [],
     "task-priorities.index": [],
     "task-statuses.index": [],
     "register": [],

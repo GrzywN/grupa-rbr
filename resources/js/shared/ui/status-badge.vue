@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { TaskPriority } from '@features/tasks/schemas/task-priority.schema';
-import { TaskStatus } from '@features/tasks/schemas/task-status.schema';
+import { type TaskHistoryEvent } from '@features/tasks/schemas/task-history-event.schema';
+import { type TaskPriority } from '@features/tasks/schemas/task-priority.schema';
+import { type TaskStatus } from '@features/tasks/schemas/task-status.schema';
 import { computed } from 'vue';
 
 export type StatusBadgeProps = {
     value: string;
-    options: (TaskPriority | TaskStatus)[];
+    options: (TaskPriority | TaskStatus | TaskHistoryEvent)[];
     isLoading?: boolean;
 };
 
