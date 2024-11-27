@@ -5,6 +5,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TaskHistoryController;
 use App\Http\Controllers\TaskHistoryEventController;
 use App\Http\Controllers\TaskPriorityController;
+use App\Http\Controllers\TaskSharingController;
 use App\Http\Controllers\TaskStatusController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,9 +32,19 @@ Route::middleware('auth')->group(static function (): void {
         Route::controller(TaskHistoryController::class)->group(static function (): void {
             Route::get('/{task}/history', 'index')->name('task-history.index');
         });
+
+        Route::controller(TaskSharingController::class)->group(static function (): void {
+            Route::get('/{task}/shares', 'index')->name('tasks.shares.index');
+            Route::post('/{task}/shares', 'store')->name('tasks.shares.store');
+            Route::delete('/{task}/shares/{token}', 'destroy')->name('tasks.shares.destroy');
+        });
     });
 
     Route::get('/task-history-events', TaskHistoryEventController::class)->name('task-history-events.index');
+});
+
+Route::prefix('external')->group(static function (): void {
+    Route::get('/tasks/{token}', [TaskSharingController::class, 'show'])->name('tasks.shared');
 
     Route::get('/task-priorities', TaskPriorityController::class)->name('task-priorities.index');
 

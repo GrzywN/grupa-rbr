@@ -36,7 +36,39 @@ declare module 'ziggy-js' {
             "binding": "id"
         }
     ],
+    "tasks.shares.index": [
+        {
+            "name": "task",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "tasks.shares.store": [
+        {
+            "name": "task",
+            "required": true,
+            "binding": "id"
+        }
+    ],
+    "tasks.shares.destroy": [
+        {
+            "name": "task",
+            "required": true,
+            "binding": "id"
+        },
+        {
+            "name": "token",
+            "required": true,
+            "binding": "id"
+        }
+    ],
     "task-history-events.index": [],
+    "tasks.shared": [
+        {
+            "name": "token",
+            "required": true
+        }
+    ],
     "task-priorities.index": [],
     "task-statuses.index": [],
     "register": [],

@@ -22,10 +22,10 @@ const handleSuccess = () => {
 
 <template>
     <Button
-        icon="ph-light ph-list"
+        icon="ph-light ph-list-magnifying-glass"
         rounded
         severity="success"
-        aria-label="Show"
+        aria-label="Show history"
         @click="handleReadTask"
     />
     <Dialog

@@ -21,4 +21,19 @@ class TaskPolicy
     {
         return $user->id === $task->user_id;
     }
+
+    public function share(User $user, Task $task): bool
+    {
+        return $user->id === $task->user_id;
+    }
+
+    public function viewShares(User $user, Task $task): bool
+    {
+        return $user->id === $task->user_id;
+    }
+
+    public function revokeShare(User $user, Task $task): bool
+    {
+        return $user->id === $task->user_id;
+    }
 }

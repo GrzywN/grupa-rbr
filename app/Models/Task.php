@@ -9,6 +9,7 @@ use App\Enums\TaskStatus;
 use App\Observers\TaskObserver;
 use Carbon\Carbon;
 use Database\Factories\TaskFactory;
+use Dyrynda\Database\Support\CascadeSoftDeletes;
 use Eloquent;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -52,8 +53,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static Builder<static>|Task withTrashed()
  * @method static Builder<static>|Task withoutTrashed()
  * @property string|null $completed_at
- * @property-read Collection<int, \App\Models\TaskHistory> $history
+ * @property-read Collection<int, TaskHistory> $history
  * @property-read int|null $history_count
+ * @property-read Collection<int, TaskShareToken> $shareTokens
+ * @property-read int|null $share_tokens_count
  * @mixin Eloquent
  */
 #[ObservedBy(TaskObserver::class)]
@@ -62,6 +65,13 @@ class Task extends Model
     /** @use HasFactory<TaskFactory> */
     use HasFactory;
     use SoftDeletes;
+    use CascadeSoftDeletes;
+
+    /** @var array<int, string> $cascadeDeletes */
+    protected array $cascadeDeletes = ['shareTokens'];
+
+    /** @var array<int, string> $dates */
+    protected array $dates = ['deleted_at'];
 
     public const MAX_TITLE_LENGTH = 255;
 
@@ -102,5 +112,13 @@ class Task extends Model
     public function history(): HasMany
     {
         return $this->hasMany(TaskHistory::class);
+    }
+
+    /**
+     * @return HasMany<TaskShareToken, $this>
+     */
+    public function shareTokens(): HasMany
+    {
+        return $this->hasMany(TaskShareToken::class);
     }
 }

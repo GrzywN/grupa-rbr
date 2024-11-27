@@ -18,4 +18,10 @@ abstract class TestCase extends BaseTestCase
 
         $this->assertTrue($isIso8601);
     }
+
+    public function assertIsUuid(mixed $uuid): void
+    {
+        $this->assertNotNull($uuid);
+        $this->assertMatchesRegularExpression('/^[a-f0-9]{8}-([a-f0-9]{4}-){3}[a-f0-9]{12}$/', $uuid);
+    }
 }
