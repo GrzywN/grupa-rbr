@@ -2,6 +2,8 @@
 
 Modern task management application built with Laravel 11, featuring email notifications and task sharing.
 
+![Application Demo](demo.gif)
+
 ## Features
 
 ### Core Functionality
